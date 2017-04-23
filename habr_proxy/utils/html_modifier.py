@@ -1,6 +1,6 @@
 from urllib import parse
 
-from bs4 import BeautifulSoup
+from bs4 import BeautifulSoup, Comment, Doctype
 
 
 class HtmlModifier:
@@ -24,16 +24,16 @@ class HtmlModifier:
 
     def modify_all_text(self, text_modifier):
         soup = self._soup
-        for element in soup.find_all():
-            if element.name != "script":
-                self._modify_text_inside_element(element, text_modifier)
+        for text in soup.find_all(text=True):
+            if self._is_text_should_be_modified(text):
+                new_text = text_modifier.get_modified_text(text)
+                text.replaceWith(new_text)
         self._modified_html = str(soup)
 
     @staticmethod
-    def _modify_text_inside_element(element, text_modifier):
-        for text in list(element.strings):
-            new_text = text_modifier.get_modified_text(text)
-            text.replaceWith(new_text)
+    def _is_text_should_be_modified(text):
+        return text.parent.name != "script" and \
+               not isinstance(text, Comment) and not isinstance(text, Doctype)
 
     def all_links_to_absolute(self, base_resource_uri):
         soup = self._soup

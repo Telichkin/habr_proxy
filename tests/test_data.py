@@ -187,6 +187,28 @@ html_raw_and_expected_text = [
         """
 <div>1<i>1</i>1</div>
 """
+    ),
+    (
+"""
+<form action="/search/#h" method="get" class="search-form" id="search-form">
+  <!-- Я вернулся братиш, после стольких лет разлуки:) -->
+</form>
+""",
+"""
+<form action="/search/#h" method="get" class="search-form" id="search-form">
+  <!-- Я вернулся братиш, после стольких лет разлуки:) -->
+</form>
+"""
+    ),
+    (
+"""
+<!DOCTYPE html>
+<html></html>
+""",
+"""
+<!DOCTYPE html>
+<html></html>
+"""
     )
 ]
 

@@ -7,7 +7,7 @@ from habr_proxy.utils import HtmlModifier
 
 class FakeContentModifier:
     def get_modified_text(self, raw_text):
-        if raw_text != "\n":
+        if raw_text.strip():
             return "1"
         else:
             return ""
