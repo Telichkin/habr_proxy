@@ -32,7 +32,7 @@ class HtmlModifier:
 
     @staticmethod
     def _is_text_should_be_modified(text):
-        return text.parent.name != "script" and \
+        return text.strip() and text.parent.name not in ["script", "style"] and \
                not isinstance(text, Comment) and not isinstance(text, Doctype)
 
     def all_links_to_absolute(self, base_resource_uri):

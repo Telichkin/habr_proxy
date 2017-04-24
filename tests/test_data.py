@@ -159,6 +159,14 @@ html_raw_and_expected_text = [
 """
     ),
     (
+"""
+<style>unmodified style</style>
+""",
+"""
+<style>unmodified style</style>
+"""
+    ),
+    (
         """
 <ul>
  <li>One text</li>
@@ -209,7 +217,7 @@ html_raw_and_expected_text = [
 <!DOCTYPE html>
 <html></html>
 """
-    )
+    ),
 ]
 
 html_raw_and_expected_links = [
