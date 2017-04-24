@@ -15,26 +15,24 @@ class ProxyServer:
         self._init_route()
 
     def _init_route(self):
-        self._app.route("/json/<uri:re:.+>", callback=self._json)
         self._app.route("/<uri:re:.+>", callback=self._proxy)
         self._app.route("/", callback=self._proxy)
 
-    def _json(self, uri):
-        full_uri = parse.urljoin(self._base_uri, parse.urljoin("/json/", uri))
-        return requests.get(full_uri, params=dict(bottle_request.GET)).json()
-
     def _proxy(self, uri="/"):
-        raw_html = self._get_raw_html(uri)
-        return self._get_modified_html(raw_html)
+        response = self._get_response(uri)
+        if "text/html" in response.headers["Content-Type"]:
+            return self._get_modified_html(response.text)
+        else:
+            return response.content
 
-    def _get_raw_html(self, uri):
+    def _get_response(self, uri):
         headers = {
             'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) '
                           'AppleWebKit/537.36 (KHTML, like Gecko) '
                           'Chrome/39.0.2171.95 Safari/537.36'
         }
         full_uri = parse.urljoin(self._base_uri, uri)
-        return requests.get(full_uri, headers=headers, params=dict(bottle_request.GET)).text
+        return requests.get(full_uri, headers=headers, params=dict(bottle_request.GET))
 
     def _get_modified_html(self, raw_html):
         html_modifier = HtmlModifier(raw_html)
