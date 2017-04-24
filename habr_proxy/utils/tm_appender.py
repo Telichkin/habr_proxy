@@ -9,7 +9,7 @@ class TMAppender:
         self.special_len = special_len
 
     def get_modified_text(self, raw_text):
-        only_words_regexp = re.compile("[a-zA-Zа-яА-Я'™-]+", re.UNICODE)
+        only_words_regexp = re.compile("[a-zA-Zа-яА-ЯёЁ'™-]+", re.UNICODE)
         other_symbols = only_words_regexp.split(raw_text)
         raw_words = only_words_regexp.findall(raw_text)
         modified_words = []

@@ -18,7 +18,9 @@ class TMAppenderTest:
         ("Как-то так", "Как-то™ так"),
         ("Hadn't oh!", "Hadn't™ oh!"),
         ("Числа не считаются 666666", "Числа не считаются 666666"),
-        ("Уже с ТМ Python™ 3.5+", "Уже с ТМ Python™ 3.5+")
+        ("Уже с ТМ Python™ 3.5+", "Уже с ТМ Python™ 3.5+"),
+        ("Слово с ё разберём", "Слово с ё разберём"),
+        ("Слово с большим Ё разберЁм", "Слово с большим Ё разберЁм"),
     ])
     def test_add_tm_to_words_with_special_len(self, raw_text, expected_text):
         tm_appender = TMAppender(special_len=6)
