@@ -12,7 +12,7 @@ class HtmlModifier:
         return BeautifulSoup(self._modified_html, "html5lib")
 
     def get_html(self):
-        return self._soup.prettify()
+        return self._modified_html.strip()
 
     def all_a_href_to_relative(self, from_base_uri):
         soup = self._soup

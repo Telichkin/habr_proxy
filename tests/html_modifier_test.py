@@ -2,7 +2,7 @@ import pytest
 
 from .utils import get_formatted_html
 from .test_data import html_raw_and_expected_a_href, html_raw_and_expected_text, html_raw_and_expected_links
-from habr_proxy.utils import HtmlModifier
+from habr_proxy.utils import HtmlModifier, TMAppender
 
 
 class FakeContentModifier:
@@ -10,7 +10,7 @@ class FakeContentModifier:
         if raw_text.strip():
             return "1"
         else:
-            return ""
+            return raw_text
 
 
 class HtmlModifierTest:
@@ -37,3 +37,11 @@ class HtmlModifierTest:
 
         assert get_formatted_html(expected_html) == get_formatted_html(html_modifier.get_html())
 
+
+class HtmlModifierWithTMAppenderTest:
+    def test_should_modify_all_text(self):
+        html = '<span class="flag flag_tutorial" title="Обучающий материал">tutorial</span>'
+        html_modifier = HtmlModifier(html)
+        html_modifier.modify_all_text(TMAppender(special_len=6))
+
+        assert html in html_modifier.get_html()
